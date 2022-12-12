@@ -1,6 +1,6 @@
 const authService = require('../../core/services/authorization.service');
 
-const use1cAuthMiddleware = () => async (req, res, next) => {
+const useYandexAuthMiddleware = () => async (req, res, next) => {
 	if (req.method === 'OPTIONS') {
 		return next();
 	}
@@ -12,7 +12,10 @@ const use1cAuthMiddleware = () => async (req, res, next) => {
 			throw new Error('Authorization header not provided');
 		}
 
-		if (!authService.validate1cToken(token)) {
+		const validationRes = await authService.validateYandexToken(token);
+		console.log('Validation result are', validationRes);
+
+		if (!validationRes) {
 			throw new Error('Invalid token');
 		}
 
@@ -31,4 +34,4 @@ const use1cAuthMiddleware = () => async (req, res, next) => {
 	}
 };
 
-module.exports = use1cAuthMiddleware;
+module.exports = useYandexAuthMiddleware;

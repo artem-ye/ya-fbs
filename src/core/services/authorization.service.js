@@ -1,13 +1,24 @@
-function validate1cToken(token) {
-    if (token === '123') {
-        return true;
-    }
+const compaignsService = require('./compaigns.service');
 
-    return false;
+function validate1cToken(token) {
+	if (token === '123') {
+		return true;
+	}
+
+	return false;
+}
+
+async function validateYandexToken(token) {
+	const res = await compaignsService.Model.findOne({ name_f: token });
+
+	console.log(res);
+
+	return !!res;
 }
 
 const authService = {
-    validate1cToken
-}
+	validate1cToken,
+	validateYandexToken,
+};
 
 module.exports = authService;

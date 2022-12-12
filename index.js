@@ -1,9 +1,10 @@
 const express = require('express');
 const appRoutes = require('./src/app.routes.js');
 const db = require('./src/core/services/db.service.js');
+const config = require('config');
 
-const PORT = 3000;
-const MONGO_URI = 'mongodb://127.0.0.1:27017/ya_fbs';
+const { PORT, MONGO_URI } = getConfig();
+start();
 
 async function start() {
 	const app = express();
@@ -16,12 +17,22 @@ async function start() {
 	await db.connect(MONGO_URI);
 	await db.initMoc();
 
-	// app.get('/', (req, res) => {
-	// 	res.send('Hello World!');
-	// });
 	app.listen(PORT, () => {
 		console.log(`Example app listening on port ${PORT}`);
 	});
 }
 
-start();
+function getConfig() {
+	try {
+		const port = config.get('port');
+		const mongo_uri = config.get('mongo_uri');
+
+		return {
+			PORT: port,
+			MONGO_URI: mongo_uri,
+		};
+	} catch (err) {
+		console.error('ERROR: Config files ./config/ contains error: ' + err.message);
+		throw err;
+	}
+}

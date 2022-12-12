@@ -1,8 +1,8 @@
 const express = require('express');
-const useAuthMiddleware = require('./auth.1c.middlware');
+const use1cAuthMiddleware = require('./auth.1c.middlware');
 const router = express.Router({ mergeParams: true });
 
-router.use(useAuthMiddleware());
+router.use(use1cAuthMiddleware());
 
 router.get('/', (req, res) => {
 	res.send('1C services works well');
