@@ -13,8 +13,6 @@ const useYandexAuthMiddleware = () => async (req, res, next) => {
 		}
 
 		const validationRes = await authService.validateYandexToken(token);
-		console.log('Validation result are', validationRes);
-
 		if (!validationRes) {
 			throw new Error('Invalid token');
 		}
