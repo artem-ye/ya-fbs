@@ -2,7 +2,7 @@ class DbDataService {
 	Model;
 
 	async getAll() {
-		return await this.Model.find();
+		return await this.Model.find().lean();
 	}
 
 	async create(data) {

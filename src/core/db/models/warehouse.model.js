@@ -6,4 +6,4 @@ const schema = new Schema({
 	name: { type: String },
 });
 
-module.exports = model('Wherhouses', schema);
+module.exports = model('Warehouses', schema);

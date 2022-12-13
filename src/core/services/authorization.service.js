@@ -1,4 +1,4 @@
-const compaignsService = require('./compaigns.service');
+const campaignsService = require('./campaigns.service');
 
 function validate1cToken(token) {
 	if (token === '123') {
@@ -9,11 +9,7 @@ function validate1cToken(token) {
 }
 
 async function validateYandexToken(token) {
-	const res = await compaignsService.Model.findOne({ name_f: token });
-
-	console.log(res);
-
-	return !!res;
+	return await campaignsService.validateToken(token);
 }
 
 const authService = {

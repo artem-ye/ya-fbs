@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const compaignsService = require('../../../core/services/compaigns.service');
+const compaignsService = require('../../../core/services/campaigns.service');
 
 router.get('/', async (req, res) => {
 	try {

@@ -26,7 +26,7 @@ const useYandexAuthMiddleware = () => async (req, res, next) => {
 
 		req.token = {
 			token,
-			// ...validationRes,
+			campaignId: validationRes._id,
 		};
 		next();
 	} catch (err) {

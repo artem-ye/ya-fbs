@@ -1,12 +1,12 @@
 const { default: mongoose } = require('mongoose');
 const Stocks = require('../db/models/stocks.model');
-const Compaign = require('../db/models/compaign.model');
-const Wherhouse = require('../db/models/wherhouse.model');
+const Campaign = require('../db/models/campaign.model');
+const Warehouse = require('../db/models/warehouse.model');
 
 const models = {
 	Stocks,
-	Compaign,
-	Wherhouse,
+	Campaign,
+	Warehouse,
 };
 
 async function connect(uri) {
@@ -14,26 +14,27 @@ async function connect(uri) {
 }
 
 async function initMoc() {
-	// const cmp = new Compaign({ token: 'token_777', name: 'company', _id: 777 });
-	// cmp.save();
-	// if ((await Stocks.find()).length === 0) {
-	// 	console.log('Initializing...');
-	// 	let itm = new Stocks({
-	// 		sku: 'test',
-	// 		count: 123,
-	// 		warehouseId: 123,
-	// 		type: 'FIT',
-	// 	});
-	// 	itm.save();
-	// 	itm = new Stocks({
-	// 		sku: 'test2',
-	// 		count: 123,
-	// 		warehouseId: 123,
-	// 		type: 'FIT',
-	// 	});
-	// 	itm.save();
-	// 	console.log('Done!!!');
-	// }
+	if ((await Campaign.countDocuments()) === 0) {
+		const cmp = new Campaign({ token: 'token_777', name: 'company', _id: 777 });
+		await cmp.save();
+	}
+
+	if ((await Stocks.countDocuments()) === 0) {
+		let itm = new Stocks({
+			sku: 'test',
+			count: 123,
+			warehouseId: 123,
+			type: 'FIT',
+		});
+		await itm.save();
+		itm = new Stocks({
+			sku: 'test2',
+			count: 123,
+			warehouseId: 123,
+			type: 'FIT',
+		});
+		await itm.save();
+	}
 }
 
 const db = {

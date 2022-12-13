@@ -1,13 +1,13 @@
 const db = require('../services/db.service');
 const BaseDataModel = require('./base/BaseDataModel');
 
-class WherhousesDataService extends BaseDataModel {
-	Model = db.models.Wherhouse;
+class WarehousesDataService extends BaseDataModel {
+	Model = db.models.Warehouse;
 
 	async create(data) {
 		const { campaignId } = data;
 
-		if (!(await this.isCompaignExists(campaignId))) {
+		if (!(await this.isCampaignExists(campaignId))) {
 			throw new Error('Compaign ID ' + campaignId + ' not exists');
 		}
 
@@ -17,18 +17,18 @@ class WherhousesDataService extends BaseDataModel {
 	async update(id, data) {
 		const { campaignId } = data;
 
-		if (!(await this.isCompaignExists(campaignId))) {
+		if (!(await this.isCampaignExists(campaignId))) {
 			throw new Error('Compaign ID ' + campaignId + ' not exists');
 		}
 
 		return await super.update(id, data);
 	}
 
-	async isCompaignExists(id) {
-		const CompaignModel = db.models.Compaign;
-		const res = await CompaignModel.findById(id);
+	async isCampaignExists(id) {
+		const CampaignModel = db.models.Campaign;
+		const res = await CampaignModel.findById(id);
 		return !!res;
 	}
 }
 
-module.exports = WherhousesDataService;
+module.exports = WarehousesDataService;

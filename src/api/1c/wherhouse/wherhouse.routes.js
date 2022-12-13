@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const wherhousesService = require('../../../core/services/wherhouses.service');
+const wherhousesService = require('../../../core/services/warehouses.service');
 
 router.get('/', async (req, res) => {
 	try {
