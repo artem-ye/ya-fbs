@@ -19,11 +19,6 @@ const useYandexAuthMiddleware = () => async (req, res, next) => {
 			throw new Error('Invalid token');
 		}
 
-		// const validationRes = await authService.validateAccessToken(token);
-		// if (!validationRes) {
-		// 	throw new Error('Invalid token');
-		// }
-
 		req.token = {
 			token,
 			campaignId: validationRes._id,
