@@ -29,6 +29,51 @@ class StocksDataService extends BaseDataModel {
 		const res = await CampaignModel.findById(id);
 		return !!res;
 	}
+
+	// -----------------------------------------------------------
+	// Yandex API requests
+	// -----------------------------------------------------------
+
+	async getStocksByWarehouseIdSkus({ warehouseId, skus }) {
+		if (!warehouseId) {
+			throw new Error('StocksDataService::getStocks warehouseId not provided');
+		}
+
+		if (!Array.isArray(skus)) {
+			throw new Error('StocksDataService::getStocks skus not array');
+		}
+
+		const stocks = await this.Model.find({
+			warehouseId: warehouseId,
+			sku: { $in: skus },
+		})
+			.select('sku count updatedAt')
+			.lean();
+
+		const now = new Date().toISOString();
+		const retVal = {
+			skus: skus.map((sku) => {
+				const { count, updatedAt } = stocks.find((e) => e.sku === sku) || {
+					count: 0,
+					updatedAt: now,
+				};
+
+				return {
+					sku,
+					warehouseId,
+					items: [
+						{
+							type: 'FIT',
+							count,
+							updatedAt,
+						},
+					],
+				};
+			}),
+		};
+
+		return retVal;
+	}
 }
 
 module.exports = StocksDataService;

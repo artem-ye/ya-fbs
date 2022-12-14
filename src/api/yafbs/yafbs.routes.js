@@ -8,4 +8,6 @@ router.get('/', (req, res) => {
 	res.send('Hello Yandex FBS API');
 });
 
+router.use('/stocks', require('./stocks/stocks.routes'));
+
 module.exports = router;
